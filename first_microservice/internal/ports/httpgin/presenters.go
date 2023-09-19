@@ -6,7 +6,10 @@ import (
 
 
 type productRequest struct {
-	nameProduct string
+	code        string
+	name        string
+	price       float64
+	description string
 }
 
 type ProductResponse struct {

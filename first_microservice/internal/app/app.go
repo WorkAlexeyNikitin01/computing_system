@@ -4,7 +4,7 @@ import product "lab/first_microservice/internal/product"
 
 type AppProductInterface interface{
 	AllListProducts() ([]product.Product, error)
-	CreateProduct(name string) (*product.Product, error)
+	CreateProduct(p product.Product) (*product.Product, error)
 }
 
 type AppProductStruct struct {
@@ -22,7 +22,7 @@ func(a *AppProductStruct) CreateProduct(p product.Product) (*product.Product, er
 		return nil, err
 	}
 	p.Id = id
-	return nil, nil
+	return &p, nil
 }
 
 func NewAppProduct(repoProduct product.ProductRepositoryInterface) AppProductInterface {

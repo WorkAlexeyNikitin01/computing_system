@@ -16,7 +16,12 @@ func(a *AppProductStruct) AllListProducts() ([]product.Product, error) {
 	return listProducts, err
 }
 
-func(a *AppProductStruct) CreateProduct(name string) (*product.Product, error) {
+func(a *AppProductStruct) CreateProduct(p product.Product) (*product.Product, error) {
+	id, err := a.repo.CreateProduct(p)
+	if err != nil {
+		return nil, err
+	}
+	p.Id = id
 	return nil, nil
 }
 

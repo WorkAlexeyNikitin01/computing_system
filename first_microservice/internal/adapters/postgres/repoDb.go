@@ -21,6 +21,16 @@ func (r *ProductPostgres) AllListProducts() ([]product.Product, error) {
 	return products, nil
 }
 
+func (r *ProductPostgres) CreateProduct(p product.Product) (int, error) {
+	var id int
+	q := fmt.Sprintf("INSERT INTO %s (code, name, price, description) VALUES ($1, $2, $3, $4) RETURNING id", productsTable)
+	row := r.db.QueryRow(q, p.Code, p.Name, p.Price, p.Description)
+	if err := row.Scan(id); err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
 func NewAuthPostgres(db *sqlx.DB) *ProductPostgres {
 	return &ProductPostgres{
 		db: db,

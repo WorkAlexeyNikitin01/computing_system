@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"fmt"
-	"lab/first_microservice/internal/product"
+	"lab/productService/internal/product"
 
 	"github.com/jmoiron/sqlx"
 )

@@ -1,6 +1,8 @@
 package service
 
 import (
+	"lab/first_microservice/internal/product"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +15,11 @@ type productRequest struct {
 }
 
 type ProductResponse struct {
-
+	id int
+	code string
+	price float64
+	name string
+	description  string
 }
 
 func productErr(err error) *gin.H {
@@ -22,8 +28,21 @@ func productErr(err error) *gin.H {
 	}
 }
 
-func productSuccess(p interface{}) *gin.H {
+func productSuccess(p *product.Product) *gin.H {
 	return &gin.H{
-		"objects": p,
+			"data": ProductResponse{
+				code: p.Code,
+				name: p.Name,
+				description: p.Description,
+				price: p.Price,
+				id: p.Id,
+			},
+			"error": nil,
+	}
+}
+
+func productsSuccess(p []*product.Product) {
+	for _, i := range p {
+		productSuccess(i)
 	}
 }

@@ -3,7 +3,7 @@ package app
 import product "lab/first_microservice/internal/product"
 
 type AppProductInterface interface{
-	AllListProducts() ([]product.Product, error)
+	AllListProducts() ([]*product.Product, error)
 	CreateProduct(p product.Product) (*product.Product, error)
 }
 
@@ -11,7 +11,7 @@ type AppProductStruct struct {
 	repo product.ProductRepositoryInterface
 }
 
-func(a *AppProductStruct) AllListProducts() ([]product.Product, error) {
+func(a *AppProductStruct) AllListProducts() ([]*product.Product, error) {
 	listProducts, err := a.repo.AllListProducts()
 	return listProducts, err
 }

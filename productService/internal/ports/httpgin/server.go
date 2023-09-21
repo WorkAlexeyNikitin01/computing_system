@@ -1,7 +1,7 @@
 package service
 
 import (
-	"lab/first_microservice/internal/app"
+	"lab/productService/internal/app"
 
 	"net/http"
 

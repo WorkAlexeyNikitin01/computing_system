@@ -1,7 +1,7 @@
 package service
 
 import (
-	"lab/first_microservice/internal/product"
+	"lab/productService/internal/product"
 
 	"github.com/gin-gonic/gin"
 )

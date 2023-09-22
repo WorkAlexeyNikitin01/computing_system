@@ -1,5 +1,5 @@
 package order
 
 type Repository interface {
-	AddToOrder() (*Order, error)
+	CreateOrder(products []interface{}) (*Order, error)
 }

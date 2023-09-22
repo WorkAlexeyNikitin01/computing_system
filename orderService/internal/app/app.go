@@ -3,14 +3,14 @@ package app
 import "lab/orderService/internal/order"
 
 type AppOrderInterface interface {
-	AddToOrder() (*order.Order, error)
+	CreateOrder(products []interface{}) (*order.Order, error)
 }
 
 type AppOrderStruct struct {
 	repo order.Repository
 }
  
-func(a *AppOrderStruct) AddToOrder() (*order.Order, error) {
+func(a *AppOrderStruct) CreateOrder(products []interface{}) (*order.Order, error) {
 	return nil, nil
 }
 

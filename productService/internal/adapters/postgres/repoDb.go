@@ -11,8 +11,8 @@ type ProductPostgres struct {
 	db *sqlx.DB
 }
 
-func (r *ProductPostgres) AllListProducts() ([]product.Product, error) {
-	var products []product.Product
+func (r *ProductPostgres) AllListProducts() ([]*product.Product, error) {
+	var products []*product.Product
 	q := fmt.Sprintf("SELECT * FROM %s", productsTable)
 	err := r.db.Get(&products, q)
 	if err != nil {
@@ -31,7 +31,7 @@ func (r *ProductPostgres) CreateProduct(p product.Product) (int, error) {
 	return id, nil
 }
 
-func NewAuthPostgres(db *sqlx.DB) *ProductPostgres {
+func NewProductPostgres(db *sqlx.DB) *ProductPostgres {
 	return &ProductPostgres{
 		db: db,
 	}

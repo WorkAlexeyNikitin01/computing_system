@@ -1,10 +1,26 @@
 package main
 
 import (
-	"fmt"
+	"lab/productService/internal/adapters/postgres"
+	"lab/productService/internal/app"
+	"log"
+
+	"lab/productService/internal/ports/httpgin"
 )
 
 func main() {
-	// подключение базы данных и http
-	fmt.Println("hello first service")
+	db, err := postgres.NewPostgresDB(postgres.ConfigPostgresProduct{
+		Host:     "db",
+		Port:     "5432",
+		Username: "postgres",
+		DBName:   "postgres",
+		SSLMode:  "disable",
+		Password: "qwerty",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	a := app.NewAppProduct(postgres.NewProductPostgres(db))
+	server := httpgin.NewHTTPServer(":18080", a)
+	log.Fatal(server.ListenAndServe())
 }

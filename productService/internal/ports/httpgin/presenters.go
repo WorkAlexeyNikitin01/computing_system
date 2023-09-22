@@ -1,4 +1,4 @@
-package service
+package httpgin
 
 import (
 	"lab/productService/internal/product"

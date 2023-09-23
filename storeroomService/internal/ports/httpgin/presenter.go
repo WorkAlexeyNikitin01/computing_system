@@ -1,9 +1,19 @@
 package httpgin
 
-import "github.com/gin-gonic/gin"
+import (
+	"lab/storeroomService/internal/storeroom"
+
+	"github.com/gin-gonic/gin"
+)
 
 type ProductCodeReq struct {
-	code string
+	code     string
+	quantity int
+}
+
+type ProductSuccess struct {
+	code     string
+	quantity int
 }
 
 func storeroomError(err error) *gin.H {
@@ -12,9 +22,12 @@ func storeroomError(err error) *gin.H {
 	}
 }
 
-func storeroomSuccess(p interface{}) *gin.H {
+func storeroomSuccess(p *storeroom.StoreroomProduct) *gin.H {
 	return &gin.H{
-		"data": p,
+		"data": ProductSuccess{
+			code: p.CodeProduct,
+			quantity: p.Quantity,
+		},
 		"error": nil,
 	}
 }

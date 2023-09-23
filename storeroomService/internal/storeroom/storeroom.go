@@ -1,5 +1,6 @@
 package storeroom
 
-type Storeroom struct {
-	Product []interface{}
+type StoreroomProduct struct {
+	CodeProduct string
+	Quantity    int
 }

@@ -1,6 +1,8 @@
 package storeroom
 
 type Repository interface {
-	AddToStoreroom()                     (interface{}, error)
-	GetProductFromStoreroom(code string) (interface{}, error)
+	AddToStoreroom(code string, quantity int) (*StoreroomProduct, error)
+	GetFromStoreroom(code string)             (*StoreroomProduct, error)
+	DeleteFromStoreroom(code string)          (*StoreroomProduct, error)
 }
+ 

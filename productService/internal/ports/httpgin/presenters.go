@@ -8,18 +8,18 @@ import (
 
 
 type productRequest struct {
-	code        string
-	name        string
-	price       float64
-	description string
+	Code        string `json:"code"`
+	Name        string `json:"name"`
+	Price       float64 `json:"price"`
+	Description string  `json:"description"`
 }
 
 type ProductResponse struct {
-	id int
-	code string
-	price float64
-	name string
-	description  string
+	Id int `json:"id"`
+	Code string `json:"code"`
+	Price float64
+	Name string
+	Description  string
 }
 
 func productErr(err error) *gin.H {
@@ -31,11 +31,11 @@ func productErr(err error) *gin.H {
 func productSuccess(p *product.Product) *gin.H {
 	return &gin.H{
 			"data": ProductResponse{
-				code: p.Code,
-				name: p.Name,
-				description: p.Description,
-				price: p.Price,
-				id: p.Id,
+				Code: p.Code,
+				Name: p.Name,
+				Description: p.Description,
+				Price: p.Price,
+				Id: p.Id,
 			},
 			"error": nil,
 	}

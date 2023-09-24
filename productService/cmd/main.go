@@ -10,7 +10,7 @@ import (
 
 func main() {
 	db, err := postgres.NewPostgresDB(postgres.ConfigPostgresProduct{
-		Host:     "db",
+		Host:     "localhost",
 		Port:     "5432",
 		Username: "postgres",
 		DBName:   "postgres",

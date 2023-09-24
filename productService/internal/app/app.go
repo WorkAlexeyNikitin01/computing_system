@@ -5,6 +5,7 @@ import product "lab/productService/internal/product"
 type AppProductInterface interface{
 	AllListProducts() ([]*product.Product, error)
 	CreateProduct(p product.Product) (*product.Product, error)
+	DeleteProduct(code string) (*product.Product, error)
 }
 
 type AppProductStruct struct {
@@ -23,6 +24,10 @@ func(a *AppProductStruct) CreateProduct(p product.Product) (*product.Product, er
 	}
 	p.Id = id
 	return &p, nil
+}
+
+func(a *AppProductStruct) DeleteProduct(code string) (*product.Product, error) {
+	return a.repo.DeleteProduct(code)
 }
 
 func NewAppProduct(repoProduct product.ProductRepositoryInterface) AppProductInterface {

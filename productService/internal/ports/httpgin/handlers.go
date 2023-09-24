@@ -39,25 +39,41 @@ func createProduct(a app.AppProductInterface) gin.HandlerFunc {
 		var reqBody productRequest
 		err := c.Bind(&reqBody)
 		if err != nil {
-			log.Println("error create product", err)
+			log.Println("error create product reqBody", err)
 			c.JSON(400, productErr(err))
 			return
 		}
-
+		log.Println(reqBody.Code, reqBody.Name, reqBody.Description, reqBody.Price)
 		p, err := a.CreateProduct(product.Product{
-			Code: reqBody.code,
-			Name: reqBody.name,
-			Description: reqBody.description,
-			Price: reqBody.price,
+			Code: reqBody.Code,
+			Name: reqBody.Name,
+			Description: reqBody.Description,
+			Price: reqBody.Price,
 		})
 		if err != nil {
 			c.JSON(200, productErr(err))
-			log.Println("error create product")
+			log.Println("error create product app")
 			return
 		}
 		log.Println("Success product", http.StatusOK, "id product", p.Id)
 		c.Status(http.StatusOK)
 		c.JSON(200, productSuccess(p))
 		log.Default()
+	}
+}
+
+func deleteProduct(a app.AppProductInterface) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var req productRequest
+		err := c.Bind(&req)
+		if err != nil {
+			log.Fatal(err)
+		}
+		result, err := a.DeleteProduct(req.Code)
+		if err != nil {
+			log.Fatal(err)
+		}
+		c.JSON(200, productSuccess(result))
+		log.Println("delete product", result.Id)
 	}
 }

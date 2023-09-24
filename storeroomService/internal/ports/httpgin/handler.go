@@ -2,6 +2,7 @@ package httpgin
 
 import (
 	"lab/storeroomService/internal/app"
+	"lab/storeroomService/internal/storeroom"
 	"log"
 	"net/http"
 
@@ -36,7 +37,7 @@ func AddToStoreroom(a app.AppStoreroomInterface) gin.HandlerFunc {
 			log.Fatal(err)
 			return
 		}
-		result, err := a.AddToStoreroom(req.code, req.quantity)
+		result, err := a.AddToStoreroom(&storeroom.StoreroomProduct{CodeProduct: req.code, Quantity: req.quantity})
 		if err != nil {
 			c.JSON(200, storeroomError(err))
 			log.Fatal(err)

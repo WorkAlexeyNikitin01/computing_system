@@ -1,4 +1,5 @@
 CREATE TABLE storeroom (
-    id         PRIMARY KEY
-    product    jsonb
+    id       serial primary key, 
+    code     text unique,
+    quantity integer
 )

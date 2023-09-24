@@ -3,7 +3,7 @@ package app
 import "lab/storeroomService/internal/storeroom"
 
 type AppStoreroomInterface interface {
-	AddToStoreroom(code string, quantity int) (*storeroom.StoreroomProduct, error)
+	AddToStoreroom(s *storeroom.StoreroomProduct) (*storeroom.StoreroomProduct, error)
 	GetFromStoreroom(code string)             (*storeroom.StoreroomProduct, error)
 	DeleteFromStoreroom(code string)          (*storeroom.StoreroomProduct, error)
 }
@@ -12,8 +12,13 @@ type AppStoreroomStruct struct {
 	repo storeroom.Repository
 }
 
-func(a *AppStoreroomStruct) AddToStoreroom(code string, quantity int) (*storeroom.StoreroomProduct, error) {
-	return a.repo.AddToStoreroom(code, quantity)
+func(a *AppStoreroomStruct) AddToStoreroom(s *storeroom.StoreroomProduct) (*storeroom.StoreroomProduct, error) {
+	id, err := a.repo.AddToStoreroom(s.CodeProduct, s.Quantity)
+	if err != nil {
+		return nil, err
+	}
+	s.Id = id
+	return s, nil
 }
 
 func(a *AppStoreroomStruct) GetFromStoreroom(code string) (*storeroom.StoreroomProduct, error) {

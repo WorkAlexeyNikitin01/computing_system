@@ -7,7 +7,7 @@ import (
 )
 
 func AppRouter(r *gin.RouterGroup, a app.AppStoreroomInterface) {
-	r.POST("/add-product", AddToStoreroom(a))
-	r.GET("/check-product", GetProductFromStoreroom(a))
-	r.DELETE("/delete-product", DeleteFromStoreroom(a))
+	r.POST("/add-product-to-store", AddToStoreroom(a))
+	r.GET("/check-product-to-store", GetProductFromStoreroom(a))
+	r.DELETE("/delete-product-to-store", DeleteFromStoreroom(a))
 }

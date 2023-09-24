@@ -9,7 +9,7 @@ import (
 
 func main() {
 	dbConfig := postgres.ConfigPostgresStoreroom{
-		Host:     "db",
+		Host:     "localhost",
 		Port:     "5433",
 		Username: "postgres",
 		DBName:   "postgres",

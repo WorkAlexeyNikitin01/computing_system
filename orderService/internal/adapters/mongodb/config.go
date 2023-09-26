@@ -1,7 +1,7 @@
 package mongodb
 
 type MGDBConfig struct {
-	Port string
-	Host string
-	DB   string
+	Port   string
+	Host   string
+	DBName string
 }

@@ -22,9 +22,7 @@ func DownMongoDB(ctx context.Context, client *mongo.Client) {
     }
 }
 
-func NewMongoDB(client *mongo.Client, nameDb string, nameCollection string) *CollectionMongo {
+func NewCollectionMongoDB(client *mongo.Client, nameDb string, nameCollection string) *mongo.Collection {
 	collection := client.Database(nameDb).Collection(nameCollection)
-	return &CollectionMongo{
-		collection: collection,
-	}
+	return collection
 }

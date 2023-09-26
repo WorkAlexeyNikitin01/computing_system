@@ -7,5 +7,5 @@ import (
 )
 
 func AppRouter(r *gin.RouterGroup, a app.AppOrderInterface) {
-	r.POST("/order", createOrder(a))
+	r.POST("/create-order", createOrder(a))
 }

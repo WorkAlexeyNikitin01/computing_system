@@ -9,7 +9,7 @@ import (
 
 func main() {
 	dbConfig := postgres.ConfigPostgresStoreroom{
-		Host:     "db",
+		Host:     "localhost",
 		Port:     "5433",
 		Username: "postgres",
 		DBName:   "postgres",
@@ -22,6 +22,7 @@ func main() {
 	}
 
 	a := app.NewAppStoreroom(postgres.NewStoreroomPostgres(pg))
-	s := httpgin.NewHTTPServer("18081", a)
+	s := httpgin.NewHTTPServer(":18082", a)
+	log.Println("start service store")
 	log.Fatal(s.ListenAndServe())
 }

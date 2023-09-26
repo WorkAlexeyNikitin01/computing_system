@@ -18,7 +18,7 @@ func createOrder(a app.AppOrderInterface) gin.HandlerFunc {
 			c.JSON(400, orderError(err))
 			return
 		}
-
+		//check quantity to storeroom grpc connection
 		order, err := a.CreateOrder(order.Order{
 			Quantity: reqBody.Quantity,
 			Name: reqBody.Name,

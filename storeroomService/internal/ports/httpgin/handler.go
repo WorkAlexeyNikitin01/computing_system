@@ -2,6 +2,7 @@ package httpgin
 
 import (
 	"lab/storeroomService/internal/app"
+	"lab/storeroomService/internal/storeroom"
 	"log"
 	"net/http"
 
@@ -13,11 +14,10 @@ func GetProductFromStoreroom(a app.AppStoreroomInterface) gin.HandlerFunc {
 		var req ProductCodeReq
 		err := c.Bind(&req)
 		if err != nil {
-			c.JSON(200, storeroomError(err))
+			log.Fatal(err)
 			return
 		}
-
-		result, err := a.GetFromStoreroom(req.code)
+		result, err := a.GetFromStoreroom(req.Code)
 		if err != nil {
 			c.JSON(200, storeroomError(err))
 			return
@@ -36,7 +36,7 @@ func AddToStoreroom(a app.AppStoreroomInterface) gin.HandlerFunc {
 			log.Fatal(err)
 			return
 		}
-		result, err := a.AddToStoreroom(req.code, req.quantity)
+		result, err := a.AddToStoreroom(storeroom.StoreroomProduct{Code: req.Code, Quantity: req.Quantity})
 		if err != nil {
 			c.JSON(200, storeroomError(err))
 			log.Fatal(err)
@@ -53,12 +53,13 @@ func DeleteFromStoreroom(a app.AppStoreroomInterface) gin.HandlerFunc {
 		if err != nil {
 			log.Fatal(err)
 		}
-		result, err := a.DeleteFromStoreroom(req.code)
+		result, err := a.DeleteFromStoreroom(req.Code)
 		if err != nil {
 			c.JSON(200, storeroomError(err))
 			log.Fatal(err)
 			return
 		}
 		c.JSON(200, storeroomSuccess(result))
+		log.Println("success delete from database", result)
 	}
 }

@@ -7,13 +7,14 @@ import (
 )
 
 type ProductCodeReq struct {
-	code     string
-	quantity int
+	Code     string `json:"code"`
+	Quantity int    `json:"quantity"`
 }
 
 type ProductSuccess struct {
-	code     string
-	quantity int
+	Id int `json:"id"`
+	Code     string `json:"code"`
+	Quantity int `json:"quantity"`
 }
 
 func storeroomError(err error) *gin.H {
@@ -25,8 +26,9 @@ func storeroomError(err error) *gin.H {
 func storeroomSuccess(p *storeroom.StoreroomProduct) *gin.H {
 	return &gin.H{
 		"data": ProductSuccess{
-			code: p.CodeProduct,
-			quantity: p.Quantity,
+			Id: p.Id,
+			Code: p.Code,
+			Quantity: p.Quantity,
 		},
 		"error": nil,
 	}

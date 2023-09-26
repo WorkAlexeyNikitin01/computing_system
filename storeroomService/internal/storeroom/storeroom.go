@@ -1,6 +1,7 @@
 package storeroom
 
 type StoreroomProduct struct {
-	CodeProduct string
+	Id int
+	Code string
 	Quantity    int
 }

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package storeroom;
+option go_package = "lab/storeroomService/internal/ports/grpc";
+
+service StoreroomService {
+  rpc GetFromStoreroom(StoreProductRequest) returns (SProductResponse) {}
+}
+
+message StoreProductRequest {
+  string code = 1;
+}
+
+message SProductResponse {
+    int64 id = 1;
+    string code = 2;
+    int64 quantity = 3;
+}

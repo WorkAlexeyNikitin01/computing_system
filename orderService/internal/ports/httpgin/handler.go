@@ -1,8 +1,13 @@
 package httpgin
 
 import (
+	"context"
 	"lab/orderService/internal/app"
 	"lab/orderService/internal/order"
+	gc "lab/orderService/internal/ports/grpc"
+
+	store "lab/storeroomService/grpc"
+
 	"log"
 	"net/http"
 
@@ -19,6 +24,12 @@ func createOrder(a app.AppOrderInterface) gin.HandlerFunc {
 			return
 		}
 		//check quantity to storeroom grpc connection
+		sproduct, _ := gc.GrpcClient.GClient.GetFromStoreroom(context.TODO(), &store.StoreProductRequest{Code: reqBody.Code})
+		if reqBody.Quantity < sproduct.Quantity {
+			log.Println("not product in store", err)
+			c.JSON(400, orderError(err))
+			return
+		}
 		order, err := a.CreateOrder(order.Order{
 			Quantity: reqBody.Quantity,
 			Name: reqBody.Name,

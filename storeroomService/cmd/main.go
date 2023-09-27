@@ -3,7 +3,7 @@ package main
 import (
 	"lab/storeroomService/internal/adapters/postgres"
 	"lab/storeroomService/internal/app"
-	gport "lab/storeroomService/internal/ports/grpc"
+	gport "lab/storeroomService/grpc"
 	"lab/storeroomService/internal/ports/httpgin"
 	
 	"net"

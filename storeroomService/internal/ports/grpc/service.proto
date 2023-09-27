@@ -2,10 +2,9 @@ syntax = "proto3";
 
 package storeroom;
 option go_package = "lab/storeroomService/internal/ports/grpc";
-import "google/protobuf/empty.proto";
 
-service AdService {
-  rpc GetFromStoreroom(StoreProductRequest) (SProductResponse) {}
+service StoreroomService {
+  rpc GetFromStoreroom(StoreProductRequest) returns (SProductResponse) {}
 }
 
 message StoreProductRequest {

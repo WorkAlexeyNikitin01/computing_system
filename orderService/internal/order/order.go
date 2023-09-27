@@ -1,6 +1,9 @@
 package order
 
 type Order struct {
-	TotalPrice      float64
-	ListProducts    []interface{}
+	Id 		     interface{}
+	Quantity 	 int
+	Code         string
+	Name         string
+	Price        float64
 }

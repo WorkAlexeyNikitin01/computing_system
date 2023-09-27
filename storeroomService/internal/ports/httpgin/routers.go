@@ -7,7 +7,7 @@ import (
 )
 
 func AppRouter(r *gin.RouterGroup, a app.AppStoreroomInterface) {
-	r.POST("/add-product-to-store", AddToStoreroom(a))
-	r.GET("/check-product-to-store", GetProductFromStoreroom(a))
-	r.DELETE("/delete-product-to-store", DeleteFromStoreroom(a))
+	r.POST("/add-sproduct", AddToStoreroom(a))
+	r.POST("/check-sproduct", GetProductFromStoreroom(a)) // ПОЧЕМУ НЕ GET? НЕ ОТПРАВЛЯЕТ JSON В hANDLER
+	r.DELETE("/delete-sproduct", DeleteFromStoreroom(a))
 }

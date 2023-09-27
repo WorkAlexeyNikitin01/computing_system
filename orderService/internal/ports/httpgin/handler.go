@@ -2,6 +2,7 @@ package httpgin
 
 import (
 	"lab/orderService/internal/app"
+	"lab/orderService/internal/order"
 	"log"
 	"net/http"
 
@@ -17,14 +18,19 @@ func createOrder(a app.AppOrderInterface) gin.HandlerFunc {
 			c.JSON(400, orderError(err))
 			return
 		}
-
-		order, err := a.CreateOrder(reqBody.listProduct)
+		//check quantity to storeroom grpc connection
+		order, err := a.CreateOrder(order.Order{
+			Quantity: reqBody.Quantity,
+			Name: reqBody.Name,
+			Code: reqBody.Code,
+			Price: reqBody.Price,
+		})
 		if err != nil {
 			c.JSON(200, orderError(err))
 			log.Println("error create order")
 			return
 		}
-		log.Println("Success create order", http.StatusOK, "quantity products", len(order.ListProducts))
+		log.Println("Success create order", http.StatusOK, "products id", order.Id, "name", order.Name)
 		c.Status(http.StatusOK)
 		c.JSON(200, orderSuccess(order))
 		log.Default()

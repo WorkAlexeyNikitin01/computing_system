@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package storeroom;
+option go_package = "lab/storeroomService/internal/ports/grpc";
+import "google/protobuf/empty.proto";
+
+service AdService {
+  rpc GetFromStoreroom(StoreProductRequest) (SProductResponse) {}
+}
+
+message StoreProductRequest {
+  string code = 1;
+}
+
+message SProductResponse {
+    int64 id = 1;
+    string code = 2;
+    int64 quantity = 3;
+}

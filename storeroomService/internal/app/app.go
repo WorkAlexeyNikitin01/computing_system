@@ -1,24 +1,26 @@
 package app
 
-import "lab/storeroomService/internal/storeroom"
+import (
+	"lab/storeroomService/internal/storeroom"
+)
 
 type AppStoreroomInterface interface {
-	AddToStoreroom(s *storeroom.StoreroomProduct) (*storeroom.StoreroomProduct, error)
-	GetFromStoreroom(code string)             (*storeroom.StoreroomProduct, error)
-	DeleteFromStoreroom(code string)          (*storeroom.StoreroomProduct, error)
+	AddToStoreroom(sproduct storeroom.StoreroomProduct) (*storeroom.StoreroomProduct, error)
+	GetFromStoreroom(code string)                       (*storeroom.StoreroomProduct, error)
+	DeleteFromStoreroom(code string)                    (*storeroom.StoreroomProduct, error)
 }
 
 type AppStoreroomStruct struct {
 	repo storeroom.Repository
 }
 
-func(a *AppStoreroomStruct) AddToStoreroom(s *storeroom.StoreroomProduct) (*storeroom.StoreroomProduct, error) {
-	id, err := a.repo.AddToStoreroom(s.CodeProduct, s.Quantity)
+func(a *AppStoreroomStruct) AddToStoreroom(sproduct storeroom.StoreroomProduct) (*storeroom.StoreroomProduct, error) {
+	id, err := a.repo.AddToStoreroom(&sproduct)
 	if err != nil {
 		return nil, err
 	}
-	s.Id = id
-	return s, nil
+	sproduct.Id = id
+	return &sproduct, nil
 }
 
 func(a *AppStoreroomStruct) GetFromStoreroom(code string) (*storeroom.StoreroomProduct, error) {

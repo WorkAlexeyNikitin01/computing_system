@@ -4,7 +4,6 @@ import (
 	"context"
 	"lab/orderService/internal/app"
 	"lab/orderService/internal/order"
-	gc "lab/orderService/internal/ports/grpc"
 
 	store "lab/storeroomService/grpc"
 
@@ -14,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func createOrder(a app.AppOrderInterface) gin.HandlerFunc {
+func createOrder(a app.AppOrderInterface, client store.StoreroomServiceClient) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var reqBody OrderRequest
 		err := c.Bind(&reqBody)
@@ -23,9 +22,9 @@ func createOrder(a app.AppOrderInterface) gin.HandlerFunc {
 			c.JSON(400, orderError(err))
 			return
 		}
-		//check quantity to storeroom grpc connection
-		sproduct, _ := gc.GrpcClient.GClient.GetFromStoreroom(context.TODO(), &store.StoreProductRequest{Code: reqBody.Code})
-		if reqBody.Quantity < sproduct.Quantity {
+
+		sproduct, _ := client.GetFromStoreroom(context.TODO(), &store.StoreProductRequest{Code: reqBody.Code})
+		if reqBody.Quantity < int(sproduct.Quantity) {
 			log.Println("not product in store", err)
 			c.JSON(400, orderError(err))
 			return

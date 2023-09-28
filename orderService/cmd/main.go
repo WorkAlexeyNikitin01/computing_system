@@ -6,6 +6,7 @@ import (
 	"lab/orderService/internal/app"
 	"log"
 
+	"lab/orderService/internal/ports/grpc"
 	"lab/orderService/internal/ports/httpgin"
 )
 
@@ -19,7 +20,8 @@ func main() {
 		log.Fatal(err)
 	}
 	a := app.NewAppOrder(mongodb.NewOrderRepoMongoDb(db))
-	server := httpgin.NewHTTPServer(":18081", a)
+	client := grpc.NewClientGRPC()
+	server := httpgin.NewHTTPServer(":18081", a, client)
 	log.Println("start server")
 	log.Fatal(server.ListenAndServe())
 }

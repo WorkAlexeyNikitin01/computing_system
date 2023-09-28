@@ -6,7 +6,7 @@ import (
 	"context"
 	"log"
 
-	ggrpc "google.golang.org/grpc"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
@@ -15,7 +15,7 @@ type Client struct {
 }
 
 func NewClientGRPC() *Client {
-	conn, err := ggrpc.DialContext(context.TODO(), "localhost:50054", ggrpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.DialContext(context.TODO(), "localhost:50054", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Println(err)
 	}

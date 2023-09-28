@@ -23,9 +23,9 @@ func createOrder(a app.AppOrderInterface) gin.HandlerFunc {
 			c.JSON(400, orderError(err))
 			return
 		}
-		//check quantity to storeroom grpc connection
-		sproduct, _ := gc.GrpcClient.GClient.GetFromStoreroom(context.TODO(), &store.StoreProductRequest{Code: reqBody.Code})
-		if reqBody.Quantity < sproduct.Quantity {
+		newClient := gc.NewClientGRPC()
+		sproduct, _ := newClient.Cli.GetFromStoreroom(context.TODO(), &store.StoreProductRequest{Code: reqBody.Code})
+		if reqBody.Quantity < int(sproduct.Quantity) {
 			log.Println("not product in store", err)
 			c.JSON(400, orderError(err))
 			return

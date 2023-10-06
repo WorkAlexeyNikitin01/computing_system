@@ -2,6 +2,8 @@ package httpgin
 
 import (
 	"context"
+	"encoding/json"
+	"lab/notification/rabbitmq/send"
 	"lab/orderService/internal/app"
 	"lab/orderService/internal/order"
 
@@ -11,9 +13,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rabbitmq/amqp091-go"
 )
 
-func createOrder(a app.AppOrderInterface, client store.StoreroomServiceClient) gin.HandlerFunc {
+func createOrder(a app.AppOrderInterface, client store.StoreroomServiceClient, rabbitChan *amqp091.Channel) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var reqBody OrderRequest
 		err := c.Bind(&reqBody)
@@ -24,7 +27,7 @@ func createOrder(a app.AppOrderInterface, client store.StoreroomServiceClient) g
 		}
 
 		sproduct, _ := client.GetFromStoreroom(context.TODO(), &store.StoreProductRequest{Code: reqBody.Code})
-		if reqBody.Quantity < int(sproduct.Quantity) {
+		if reqBody.Quantity > int(sproduct.Quantity) {
 			log.Println("not product in store", err)
 			c.JSON(400, orderError(err))
 			return
@@ -40,6 +43,15 @@ func createOrder(a app.AppOrderInterface, client store.StoreroomServiceClient) g
 			log.Println("error create order")
 			return
 		}
+		body := map[string]any{
+			"id": order.Id,
+			"quantity":   order.Quantity,
+			"code":    order.Code,
+			"name": order.Name,
+			"price": order.Price,
+		}
+		byteBody, _ := json.Marshal(body)
+		_ = send.SendToQueue(byteBody, context.TODO(), rabbitChan)
 		log.Println("Success create order", http.StatusOK, "products id", order.Id, "name", order.Name)
 		c.Status(http.StatusOK)
 		c.JSON(200, orderSuccess(order))

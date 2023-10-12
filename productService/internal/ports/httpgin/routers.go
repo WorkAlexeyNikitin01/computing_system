@@ -1,7 +1,7 @@
 package httpgin
 
 import (
-	"lab/productService/app"
+	"lab/productService/internal/app"
 
 	"github.com/gin-gonic/gin"
 )

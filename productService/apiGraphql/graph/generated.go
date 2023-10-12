@@ -8,7 +8,7 @@ import (
 	"embed"
 	"errors"
 	"fmt"
-	"lab/apiGraphql/graph/model"
+	"lab/productService/apiGraphql/graph/model"
 	"strconv"
 	"sync"
 	"sync/atomic"

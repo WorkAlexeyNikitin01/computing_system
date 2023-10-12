@@ -7,7 +7,7 @@ package graph
 import (
 	"context"
 	"fmt"
-	"lab/apiGraphql/graph/model"
+	"lab/productService/apiGraphql/graph/model"
 )
 
 // CreateProduct is the resolver for the createProduct field.
@@ -22,7 +22,8 @@ func (r *queryResolver) GetProducts(ctx context.Context) ([]*model.Product, erro
 
 // GetProduct is the resolver for the getProduct field.
 func (r *queryResolver) GetProduct(ctx context.Context, code string) (*model.Product, error) {
-	return &model.Product{Name: "name", Price: 100}, nil
+	p, _ := r.AppProduct.GetProduct(code)
+	return &model.Product{Name: p.Name, Price: int(p.Price)}, nil
 }
 
 // Mutation returns MutationResolver implementation.

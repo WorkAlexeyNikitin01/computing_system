@@ -1,7 +1,7 @@
 package httpgin
 
 import (
-	"lab/productService/app"
+	"lab/productService/internal/app"
 
 	"net/http"
 

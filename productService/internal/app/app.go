@@ -1,6 +1,6 @@
 package app
 
-import product "lab/productService/product"
+import product "lab/productService/internal/product"
 
 type AppProductInterface interface{
 	AllListProducts() ([]*product.Product, error)

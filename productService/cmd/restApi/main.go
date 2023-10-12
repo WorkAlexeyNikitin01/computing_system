@@ -1,11 +1,11 @@
 package main
 
 import (
-	"lab/productService/adapters/postgres"
-	"lab/productService/app"
+	"lab/productService/internal/adapters/postgres"
+	"lab/productService/internal/app"
 	"log"
 
-	"lab/productService/ports/httpgin"
+	"lab/productService/internal/ports/httpgin"
 )
 
 func main() {

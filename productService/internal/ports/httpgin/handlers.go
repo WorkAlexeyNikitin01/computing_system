@@ -1,8 +1,8 @@
 package httpgin
 
 import (
-	"lab/productService/app"
-	"lab/productService/product"
+	"lab/productService/internal/app"
+	"lab/productService/internal/product"
 
 	"log"
 	"net/http"

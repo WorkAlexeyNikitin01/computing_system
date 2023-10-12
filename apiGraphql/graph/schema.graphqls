@@ -4,6 +4,7 @@
 
 type Product {
   id: ID!
+  code: String!
   name: String!
   price: Int!
 }
@@ -15,4 +16,9 @@ input NewProduct {
 
 type Mutation {
   createProduct (input: NewProduct!): Product!
+}
+
+type Query {
+  getProducts: [Product]
+  getProduct (code:String!): Product
 }

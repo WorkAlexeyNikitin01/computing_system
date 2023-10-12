@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"fmt"
-	"lab/productService/internal/product"
+	"lab/productService/product"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -44,6 +44,17 @@ func (r *ProductPostgres) DeleteProduct(code string) (*product.Product, error) {
 		return nil, err
 	}
 	return &product, nil
+}
+
+func(r *ProductPostgres) GetProduct(code string) (*product.Product, error) {
+	var p product.Product
+	q := fmt.Sprintf("SELECT id, code, name, price, description FROM %s WHERE code=$1", productsTable)
+	err := r.db.Get(&p, q, code)
+	if err != nil {
+		fmt.Println("err here")
+		return nil, err
+	}
+	return &p, nil
 }
 
 func NewProductPostgres(db *sqlx.DB) *ProductPostgres {

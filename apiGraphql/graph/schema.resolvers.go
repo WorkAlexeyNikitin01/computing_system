@@ -22,12 +22,7 @@ func (r *queryResolver) GetProducts(ctx context.Context) ([]*model.Product, erro
 
 // GetProduct is the resolver for the getProduct field.
 func (r *queryResolver) GetProduct(ctx context.Context, code string) (*model.Product, error) {
-	return &model.Product{
-		ID:    "10",
-		Code:  "code",
-		Name:  "name",
-		Price: 100,
-	}
+	return &model.Product{Name: "name", Price: 100}, nil
 }
 
 // Mutation returns MutationResolver implementation.
@@ -38,16 +33,3 @@ func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *queryResolver) GetProduct(ctx context.Context, code string) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: GetProduct - getProduct"))
-}
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewProduct) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
-}

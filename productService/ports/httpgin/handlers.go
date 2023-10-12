@@ -1,8 +1,8 @@
 package httpgin
 
 import (
-	"lab/productService/internal/app"
-	"lab/productService/internal/product"
+	"lab/productService/app"
+	"lab/productService/product"
 
 	"log"
 	"net/http"
@@ -75,5 +75,29 @@ func deleteProduct(a app.AppProductInterface) gin.HandlerFunc {
 		}
 		c.JSON(200, productSuccess(result))
 		log.Println("delete product", result.Id)
+	}
+}
+
+func getProduct(a app.AppProductInterface) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var reqBody productRequest
+		err := c.Bind(&reqBody)
+		if err != nil {
+			log.Println("error get product bind", err)
+			c.JSON(400, productErr(err))
+			return
+		}
+
+		product, err := a.GetProduct(reqBody.Code)
+		if err != nil {
+			c.JSON(200, productErr(err))
+			log.Println("error get product")
+			return
+		}
+		log.Println("Success product", http.StatusOK, "product", product)
+		c.Status(http.StatusOK)
+		productSuccess(product)
+		c.JSON(200, product)
+		log.Default()
 	}
 }

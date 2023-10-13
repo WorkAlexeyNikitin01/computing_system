@@ -8,16 +8,27 @@ import (
 	"context"
 	"fmt"
 	"lab/productService/apiGraphql/graph/model"
+	"lab/productService/internal/product"
+	"strconv"
 )
 
 // CreateProduct is the resolver for the createProduct field.
 func (r *mutationResolver) CreateProduct(ctx context.Context, input model.NewProduct) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: CreateProduct - createProduct"))
+	inputProduct := product.Product{Name: input.Name, Price: float64(input.Price)}
+	p, _ := r.AppProduct.CreateProduct(inputProduct)
+	return &model.Product{ID: strconv.Itoa(p.Id), Name: input.Name, Price: input.Price}, nil
 }
 
 // GetProducts is the resolver for the getProducts field.
 func (r *queryResolver) GetProducts(ctx context.Context) ([]*model.Product, error) {
-	panic(fmt.Errorf("not implemented: GetProducts - getProducts"))
+	var productsForApi []*model.Product
+	ps, _ := r.AppProduct.AllListProducts()
+	fmt.Println(ps)
+	for _, i := range ps {
+		p := model.Product{Name: i.Name, Price: int(i.Price)}
+		productsForApi = append(productsForApi, &p)
+	}
+	return productsForApi, nil
 }
 
 // GetProduct is the resolver for the getProduct field.

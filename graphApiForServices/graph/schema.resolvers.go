@@ -7,34 +7,26 @@ package graph
 import (
 	"context"
 	"fmt"
-	"lab/productService/apiGraphql/graph/model"
-	"lab/productService/internal/product"
+	"lab/graphApiForServices/graph/model"
 	"strconv"
 )
 
 // CreateProduct is the resolver for the createProduct field.
 func (r *mutationResolver) CreateProduct(ctx context.Context, input model.NewProduct) (*model.Product, error) {
-	inputProduct := product.Product{Name: input.Name, Price: float64(input.Price)}
-	p, _ := r.AppProduct.CreateProduct(inputProduct)
-	return &model.Product{ID: strconv.Itoa(p.Id), Name: input.Name, Price: input.Price}, nil
+	p := r.Cli.CreateProduct(input.Name, float64(input.Price), input.Code)
+	return &model.Product{Name: p.Name, Price: int(p.Price), Code: p.Code, ID: fmt.Sprint(p.Id)}, nil
 }
 
-// GetProducts is the resolver for the getProducts field.
-func (r *queryResolver) GetProducts(ctx context.Context) ([]*model.Product, error) {
-	var productsForApi []*model.Product
-	ps, _ := r.AppProduct.AllListProducts()
-	fmt.Println(ps)
-	for _, i := range ps {
-		p := model.Product{Name: i.Name, Price: int(i.Price)}
-		productsForApi = append(productsForApi, &p)
-	}
-	return productsForApi, nil
+// CreateOrder is the resolver for the createOrder field.
+func (r *mutationResolver) CreateOrder(ctx context.Context, input model.NewOrder) (*model.Order, error) {
+	or := r.Cli.CreateOrder(input.Code, float64(input.Price), input.Name, input.Total)
+	return &model.Order{Code: or.Code, Name: or.Name, Total: int(or.Total), Price: int(or.Price), ID: or.Id}, nil
 }
 
 // GetProduct is the resolver for the getProduct field.
 func (r *queryResolver) GetProduct(ctx context.Context, code string) (*model.Product, error) {
-	p, _ := r.AppProduct.GetProduct(code)
-	return &model.Product{Name: p.Name, Price: int(p.Price)}, nil
+	p := r.Cli.GetProductRest(code)
+	return &model.Product{Name: p.Name, Price: int(p.Price), Code: p.Code, ID: strconv.Itoa(p.Id)}, nil
 }
 
 // Mutation returns MutationResolver implementation.

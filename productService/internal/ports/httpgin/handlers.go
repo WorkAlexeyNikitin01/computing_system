@@ -57,7 +57,8 @@ func createProduct(a app.AppProductInterface) gin.HandlerFunc {
 		}
 		log.Println("Success product", http.StatusOK, "id product", p.Id)
 		c.Status(http.StatusOK)
-		c.JSON(200, productSuccess(p))
+		productSuccess(p)
+		c.JSON(200, p)
 		log.Default()
 	}
 }

@@ -17,9 +17,9 @@ type productRequest struct {
 type ProductResponse struct {
 	Id int `json:"id"`
 	Code string `json:"code"`
-	Price float64
-	Name string
-	Description  string
+	Price float64 `json:"price"`
+	Name string `json:"name"`
+	Description  string `json:"description"`
 }
 
 func productErr(err error) *gin.H {

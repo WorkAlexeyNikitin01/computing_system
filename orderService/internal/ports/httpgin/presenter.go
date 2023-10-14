@@ -1,6 +1,7 @@
 package httpgin
 
 import (
+	"fmt"
 	"lab/orderService/internal/order"
 
 	"github.com/gin-gonic/gin"
@@ -14,6 +15,7 @@ type OrderRequest struct {
 }
 
 type OrderSuccess struct {
+	Id       string  `json:"id"`
 	Name     string  `json:"name"`
 	Quantity int     `json:"quantity"`
 	Code     string  `json:"code"`
@@ -24,6 +26,7 @@ type OrderSuccess struct {
 func orderSuccess(or *order.Order) *gin.H {
 	return &gin.H{
 		"data": OrderSuccess{
+			Id: fmt.Sprint(or.Id),
 			Name: or.Name,
 			Quantity: or.Quantity,
 			Price: or.Price,

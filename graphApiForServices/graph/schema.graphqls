@@ -2,23 +2,40 @@
 #
 # https://gqlgen.com/getting-started/
 
+
 type Product {
-  id: ID!
+  id: String!
   code: String!
   name: String!
   price: Int!
 }
 
 input NewProduct {
+  code: String!
   name: String!
   price: Int!
 }
 
+type Order {
+  id: String!
+  code: String!
+  name: String!
+  price: Int!
+  total: Int!
+}
+
+input NewOrder {
+  code: String!
+  name: String!
+  price: Int!
+  total: Int!
+}
+
 type Mutation {
   createProduct (input: NewProduct!): Product!
+  createOrder (input: NewOrder!): Order!
 }
 
 type Query {
-  getProducts: [Product]
   getProduct (code:String!): Product
 }

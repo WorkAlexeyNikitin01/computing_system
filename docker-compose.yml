@@ -13,6 +13,7 @@ services:
       - postgres-storeroom
       - postgres-product
       - rabbit
+      - mongodb
   
   postgres-product:
     restart: always

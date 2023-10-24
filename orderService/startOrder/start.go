@@ -1,4 +1,4 @@
-package main
+package startOrder
 
 import (
 	"context"
@@ -13,8 +13,9 @@ import (
 	"github.com/rabbitmq/amqp091-go"
 )
 
-func main() {
-	clientMongo, err := mongodb.NewClientMongoDB(context.TODO(), "27017", "mongodb", "localhost")
+func Start() {
+	log.Println("start order")
+	clientMongo, err := mongodb.NewClientMongoDB(context.TODO(), "27017", "mongodb", "mongodb")
 	if err != nil {
 		log.Fatal("error clientMongo")
 	}
@@ -32,7 +33,7 @@ func main() {
 }
 
 func ChanRabbit() (*amqp091.Channel, error) {
-	conn, err := send.ConnectToRabbit("localhost")
+	conn, err := send.ConnectToRabbit("rabbit")
 	if err != nil {
 		return nil, err
 	}

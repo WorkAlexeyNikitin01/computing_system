@@ -1,30 +1,32 @@
 package send
 
 import (
-  "context"
-  "log"
-//   "time"
+	"context"
+	"fmt"
+	"log"
 
-  amqp "github.com/rabbitmq/amqp091-go"
+	//   "time"
+
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 // func main() {
 // 	conn, err := ConnectToRabbit()
 // 	failOnError(err, "Failed connection")
-	
+
 // 	ch, err := CreateChRabbit(conn)
 // 	failOnError(err, "Failed to open a channel")
 
 // 	q, err := CreateQueue(ch)
 // 	failOnError(err, "Failed to declare a queue")
-	
+
 // 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 // 	defer cancel()
-	
+
 // 	body := "Hello World!"
 // 	err = SendToQueue([]byte(body), ctx, ch, q)
 // 	failOnError(err, "Failed to publish a message")
-// 	log.Printf(" [x] Sent %s\n", body)	  
+// 	log.Printf(" [x] Sent %s\n", body)
 // }
 
 func FailOnError(err error, msg string) {
@@ -33,8 +35,8 @@ func FailOnError(err error, msg string) {
 	}
 }
 
-func ConnectToRabbit() (*amqp.Connection, error) {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+func ConnectToRabbit(host string) (*amqp.Connection, error) {
+	conn, err := amqp.Dial(fmt.Sprintf("amqp://guest:guest@%s:5672/", host))
 	if err != nil  {
 		return nil, err
 	}

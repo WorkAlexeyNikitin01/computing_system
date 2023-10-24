@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  project:
+    build: ./
+    command: go run cmd/main.go
+    ports:
+      - 18082:18082
+      - 8080:8080
+      - 18081:18081
+      - 18080:18080
+    depends_on:
+      - postgres-storeroom
+      - postgres-product
+      - rabbit
+  
+  postgres-product:
+    restart: always
+    ports:
+      - 5432:5432
+    image: postgres:alpine
+    environment:
+      - USERNAME=postgres
+      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_DB=postgres 
+
+  postgres-storeroom:
+    restart: always
+    ports:
+      - 5433:5433
+    image: postgres:alpine
+    environment:
+      - USERNAME=postgres
+      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_DB=postgres 
+    command:
+      - "postgres"
+      - "-c"
+      - "port=5433"
+
+  rabbit:
+    ports:
+      - 5672:5672
+      - 15672:15672
+    image: rabbitmq:3-management
+  
+  mongodb:
+    ports:
+      - 27017:27017
+    image: mongo
